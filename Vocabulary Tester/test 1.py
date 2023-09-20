@@ -8,8 +8,8 @@ customer_spending = {
 
 for i in customer_spending:
     if customer_spending[i] > 10000:
-        customer_spending[i] == "vip"
+        customer_spending[i] = "vip"
     else:
-        customer_spending[i] == "normal customer"
+        customer_spending[i] = "normal customer"
 
 print(customer_spending)

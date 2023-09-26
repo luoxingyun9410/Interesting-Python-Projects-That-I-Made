@@ -1,6 +1,7 @@
 from tkinter import *
 from PIL import Image, ImageTk
 import json
+from tkinter import messagebox
 
 window = Tk()
 window.title("LastPass")
@@ -41,15 +42,26 @@ def add_password():
     account = acc_input.get()
     password = pass_input.get()
 
-    password_dic[name] = {
-        "account":account,
-        "password":password
-    }
+    if name =="" or account =="" or password == "":
+        print(messagebox.showerror(title="Failed", message="Entry cannot be empty"))
+    elif name in password_dic.keys():
+        print(messagebox.showerror(title="Failed", message="Account already exists"))
+    else:
+        password_dic[name] = {
+            "account":account,
+            "password":password
+        }
 
-    with open("password.json","w") as f:
-        f.write(json.dumps(password_dic))
+        with open("password.json","w") as f:
+            f.write(json.dumps(password_dic))
 
-button = Button(text="Add", width=35, bg="#0066CC", fg="white", command=add_password)
+        name_input.delete(0,'end')
+        acc_input.delete(0,'end')
+        pass_input.delete(0,'end')
+
+        messagebox.showinfo(title="Successed", message="New account has been added")
+
+button = Button(text="Add", width=35, bg="#0066CC", fg="white", command=lambda: [add_password(), empty_input()])
 button.grid(pady=10, row=4, column=0, columnspan=2)
 
 window.mainloop()

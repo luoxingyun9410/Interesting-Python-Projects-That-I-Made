@@ -61,7 +61,7 @@ def add_password():
 
         messagebox.showinfo(title="Successed", message="New account has been added")
 
-button = Button(text="Add", width=35, bg="#0066CC", fg="white", command=lambda: [add_password(), empty_input()])
+button = Button(text="Add", width=35, bg="#0066CC", fg="white", command=add_password)
 button.grid(pady=10, row=4, column=0, columnspan=2)
 
 window.mainloop()

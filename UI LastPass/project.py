@@ -33,8 +33,13 @@ pass_input.grid(row=3,column=1)
 
 
 def get_password_dic():
-    with open("password.json","r") as f:
-        password_str = f.read()
+    try:
+        with open("password.json","r") as f:
+            password_str = f.read()
+    except:
+        with open("password.json","w") as f:
+            return {}
+    else:
         if password_str == "":
             return {}
         else:
@@ -67,13 +72,13 @@ def add_password():
 
 def search_acc():
     password_dic = get_password_dic()
-    if name_input in password_dic.keys():
-        name = name_input.get()
+    name = name_input.get()
+    if name in password_dic.keys():
         account = password_dic[name]["account"]
         password = password_dic[name]["password"]
         messagebox.showinfo(title=name, message=f"Account: {account}\nPassword: {password}")
     else:
-        return True
+        messagebox.showwarning(title="Failed", message="Account doesn't exist")
     
 button1 = Button(text="Search", width=35, bg="#8E8E8E", fg="white", command=search_acc)
 button1.grid(pady=10, row=4, column=0, columnspan=2)

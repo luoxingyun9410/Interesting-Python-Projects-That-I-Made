@@ -1,4 +1,5 @@
 from tkinter import *
+from tkinter import messagebox
 import tkinter.font as tkFont
 
 window = Tk()
@@ -28,11 +29,17 @@ bmi_label = Label(text="Your BMI is ")
 bmi_label.grid(row=2, column=1)
 
 def cal_bmi():
-    height = float(height_input.get())/100
-    weight = float(weight_input.get())
-    bmi = weight / height**2
-    bmi = round(bmi, 1)
-    bmi_label["text"] = f"Your BMI is {bmi}"
+        try:
+            height = float(height_input.get())/100
+            weight = float(weight_input.get())
+            if height < 0 or weight < 0:
+                 raise ValueError("Height or weight cannot be negative")
+        except:
+            messagebox.showerror(title="Error", message="Wrong type of input")
+        else:
+            bmi = weight / height**2
+            bmi = round(bmi, 1)
+            bmi_label["text"] = f"Your BMI is {bmi}"
 
 button = Button(text="Calculate",command=cal_bmi)
 button.grid(row=3, column=1)

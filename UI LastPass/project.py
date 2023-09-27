@@ -31,13 +31,17 @@ pass_label.grid(row=3,column=0)
 pass_input=Entry()
 pass_input.grid(row=3,column=1)
 
-def add_password():
+
+def get_password_dic():
     with open("password.json","r") as f:
         password_str = f.read()
         if password_str == "":
-            password_dic = {}
+            return {}
         else:
-            password_dic = json.loads(password_str)
+            return json.loads(password_str)
+        
+def add_password():
+    password_dic = get_password_dic()
     name = name_input.get()
     account = acc_input.get()
     password = pass_input.get()
@@ -61,7 +65,20 @@ def add_password():
 
         messagebox.showinfo(title="Successed", message="New account has been added")
 
+def search_acc():
+    password_dic = get_password_dic()
+    if name_input in password_dic.keys():
+        name = name_input.get()
+        account = password_dic[name]["account"]
+        password = password_dic[name]["password"]
+        messagebox.showinfo(title=name, message=f"Account: {account}\nPassword: {password}")
+    else:
+        return True
+    
+button1 = Button(text="Search", width=35, bg="#8E8E8E", fg="white", command=search_acc)
+button1.grid(pady=10, row=4, column=0, columnspan=2)
+
 button = Button(text="Add", width=35, bg="#0066CC", fg="white", command=add_password)
-button.grid(pady=10, row=4, column=0, columnspan=2)
+button.grid(row=5, column=0, columnspan=2)
 
 window.mainloop()
